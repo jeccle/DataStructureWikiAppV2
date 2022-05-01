@@ -237,6 +237,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "WikiForm";
             this.Text = "My Data Structure Wiki";
+            this.Load += new System.EventHandler(this.WikiForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
