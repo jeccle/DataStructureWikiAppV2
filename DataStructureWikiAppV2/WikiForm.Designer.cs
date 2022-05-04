@@ -47,7 +47,7 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.loadButton = new System.Windows.Forms.Button();
             this.clearButton = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.structureBox = new System.Windows.Forms.GroupBox();
             this.wikiStrip = new System.Windows.Forms.StatusStrip();
             this.stripLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.wikiStrip.SuspendLayout();
@@ -225,14 +225,14 @@
             this.clearButton.UseVisualStyleBackColor = true;
             this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
             // 
-            // groupBox1
+            // structureBox
             // 
-            this.groupBox1.Location = new System.Drawing.Point(139, 40);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(97, 54);
-            this.groupBox1.TabIndex = 18;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Structure Type";
+            this.structureBox.Location = new System.Drawing.Point(139, 40);
+            this.structureBox.Name = "structureBox";
+            this.structureBox.Size = new System.Drawing.Size(97, 54);
+            this.structureBox.TabIndex = 18;
+            this.structureBox.TabStop = false;
+            this.structureBox.Text = "Structure Type";
             // 
             // wikiStrip
             // 
@@ -272,7 +272,7 @@
             this.Controls.Add(this.linRB);
             this.Controls.Add(this.nameBox);
             this.Controls.Add(this.catBox);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.structureBox);
             this.Name = "WikiForm";
             this.Text = "My Data Structure Wiki";
             this.Load += new System.EventHandler(this.WikiForm_Load);
@@ -302,7 +302,7 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button loadButton;
         private System.Windows.Forms.Button clearButton;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox structureBox;
         private System.Windows.Forms.StatusStrip wikiStrip;
         private System.Windows.Forms.ToolStripStatusLabel stripLabel;
         private System.Windows.Forms.ColumnHeader nameColumn;

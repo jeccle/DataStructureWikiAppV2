@@ -44,17 +44,46 @@ namespace DataStructureWikiAppV2
             }
             else
             {
-                linRB.ForeColor = Color.Red;
-                nonLinRB.ForeColor = Color.Red;
-                stripLabel.Text = "Please specify Linear/Non-Linear.";
-                return null;
+                return "null";
             }
         }
 
         // Will return bool checking if all text boxes are appropriately filled.
         private bool CheckTextBoxes()
         {
-            return true;
+            if (!(CheckRadioBoxValue() == "null") && !string.IsNullOrEmpty(nameBox.Text) && !string.IsNullOrEmpty(catBox.Text)
+                && !string.IsNullOrEmpty(descBox.Text))
+            {
+                return true;
+            }
+            else
+            {
+                ClearColors();
+                // Check each text box, identify if they need to be filled with a red visual marker.
+                if (string.IsNullOrEmpty(nameBox.Text))
+                {
+                    nameBox.BackColor = Color.LightPink;
+                    stripLabel.Text = "Please specify Name.";
+                }
+                if (string.IsNullOrEmpty(catBox.Text))
+                {
+                    catBox.BackColor = Color.LightPink;
+                    stripLabel.Text = "Please specify Category";
+                }
+                if (CheckRadioBoxValue() == "null")
+                {
+                    linRB.ForeColor = Color.Red;
+                    nonLinRB.ForeColor = Color.Red;
+                    stripLabel.Text = "Please specify Linear/Non-Linear.";
+                }
+                if (string.IsNullOrEmpty(descBox.Text)) 
+                { 
+                    descBox.BackColor = Color.LightPink;
+                    stripLabel.Text = "Please specify Description";
+                }
+                stripLabel.Text = "Fields inappropriately filled. Correct them and try again.";
+                return false;
+            }
         }
 
         private void DisplayListView()
@@ -66,6 +95,25 @@ namespace DataStructureWikiAppV2
                 structureDisplay.SubItems.Add(wiki[i].getCategory());
                 listViewDisplay.Items.Add(structureDisplay);
             }
+        }
+
+        private void ClearColors()
+        {
+            linRB.ForeColor = Color.Black;
+            nonLinRB.ForeColor = Color.Black;
+            nameBox.BackColor = Color.White;
+            catBox.BackColor = Color.White;
+            descBox.BackColor = Color.White;
+        }
+
+        private void ClearBoxes()
+        {
+            nameBox.Clear();
+            catBox.Text = "";
+            linRB.ForeColor = Color.Black;
+            nonLinRB.ForeColor = Color.Black;
+            descBox.Clear();
+            stripLabel.Text = "";
         }
         #endregion
 
@@ -89,7 +137,7 @@ namespace DataStructureWikiAppV2
                     }
                 }
             }
-            catch
+            catch (IOException ex)
             {
                 // Error msgs
             }
@@ -110,7 +158,7 @@ namespace DataStructureWikiAppV2
                     }
                 }
             }
-            catch
+            catch (IOException ex)
             {
                 // error msgs
             }
@@ -120,14 +168,22 @@ namespace DataStructureWikiAppV2
         #region Buttons
         private void addButton_Click(object sender, EventArgs e)
         {
-        
-            Information information = new Information();
-            information.setName(nameBox.Text);
-            information.setCategory(catBox.SelectedItem.ToString());
-            information.setStructure(CheckRadioBoxValue());
-            information.setDescription(descBox.Text);
-            wiki.Add(information);
-            DisplayListView();
+            if (CheckTextBoxes())
+            {
+                Information information = new Information();
+                information.setStructure(CheckRadioBoxValue());
+                information.setName(nameBox.Text);
+                information.setCategory(catBox.SelectedItem.ToString());
+                information.setDescription(descBox.Text);
+                wiki.Add(information);
+                DisplayListView();
+                ClearColors();
+                ClearBoxes();
+            }
+            else
+            {
+                //MessageBox.Show("testing");
+            }
 
         }
 
@@ -143,17 +199,21 @@ namespace DataStructureWikiAppV2
 
         private void clearButton_Click(object sender, EventArgs e)
         {
-
+            ClearColors();
+            ClearBoxes();
+            stripLabel.Text = "Clearing wiki...";
         }
 
         private void loadButton_Click(object sender, EventArgs e)
         {
             LoadFromFile(fileName);
+            stripLabel.Text = "Loading from file...";
         }
 
         private void saveButton_Click(object sender, EventArgs e)
         {
             SaveToFile(fileName);
+            stripLabel.Text = "Writing to file...";
         }
         #endregion
 
