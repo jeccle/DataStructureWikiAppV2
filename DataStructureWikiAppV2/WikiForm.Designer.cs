@@ -30,22 +30,27 @@
         {
             this.catBox = new System.Windows.Forms.ComboBox();
             this.nameBox = new System.Windows.Forms.TextBox();
-            this.linRadioButton = new System.Windows.Forms.RadioButton();
-            this.nonLinRadioButton = new System.Windows.Forms.RadioButton();
+            this.linRB = new System.Windows.Forms.RadioButton();
+            this.nonLinRB = new System.Windows.Forms.RadioButton();
             this.descBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.listViewDisplay = new System.Windows.Forms.ListView();
+            this.nameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.catColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.addButton = new System.Windows.Forms.Button();
             this.editButton = new System.Windows.Forms.Button();
             this.delButton = new System.Windows.Forms.Button();
             this.searchButton = new System.Windows.Forms.Button();
             this.searchBox = new System.Windows.Forms.TextBox();
             this.saveButton = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.loadButton = new System.Windows.Forms.Button();
             this.clearButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.wikiStrip = new System.Windows.Forms.StatusStrip();
+            this.stripLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.wikiStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // catBox
@@ -63,27 +68,27 @@
             this.nameBox.Size = new System.Drawing.Size(100, 20);
             this.nameBox.TabIndex = 1;
             // 
-            // linRadioButton
+            // linRB
             // 
-            this.linRadioButton.AutoSize = true;
-            this.linRadioButton.Location = new System.Drawing.Point(146, 54);
-            this.linRadioButton.Name = "linRadioButton";
-            this.linRadioButton.Size = new System.Drawing.Size(54, 17);
-            this.linRadioButton.TabIndex = 2;
-            this.linRadioButton.TabStop = true;
-            this.linRadioButton.Text = "Linear";
-            this.linRadioButton.UseVisualStyleBackColor = true;
+            this.linRB.AutoSize = true;
+            this.linRB.Location = new System.Drawing.Point(146, 54);
+            this.linRB.Name = "linRB";
+            this.linRB.Size = new System.Drawing.Size(54, 17);
+            this.linRB.TabIndex = 2;
+            this.linRB.TabStop = true;
+            this.linRB.Text = "Linear";
+            this.linRB.UseVisualStyleBackColor = true;
             // 
-            // nonLinRadioButton
+            // nonLinRB
             // 
-            this.nonLinRadioButton.AutoSize = true;
-            this.nonLinRadioButton.Location = new System.Drawing.Point(146, 74);
-            this.nonLinRadioButton.Name = "nonLinRadioButton";
-            this.nonLinRadioButton.Size = new System.Drawing.Size(77, 17);
-            this.nonLinRadioButton.TabIndex = 3;
-            this.nonLinRadioButton.TabStop = true;
-            this.nonLinRadioButton.Text = "Non-Linear";
-            this.nonLinRadioButton.UseVisualStyleBackColor = true;
+            this.nonLinRB.AutoSize = true;
+            this.nonLinRB.Location = new System.Drawing.Point(146, 74);
+            this.nonLinRB.Name = "nonLinRB";
+            this.nonLinRB.Size = new System.Drawing.Size(77, 17);
+            this.nonLinRB.TabIndex = 3;
+            this.nonLinRB.TabStop = true;
+            this.nonLinRB.Text = "Non-Linear";
+            this.nonLinRB.UseVisualStyleBackColor = true;
             // 
             // descBox
             // 
@@ -122,12 +127,27 @@
             // 
             // listViewDisplay
             // 
+            this.listViewDisplay.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.nameColumn,
+            this.catColumn});
+            this.listViewDisplay.FullRowSelect = true;
             this.listViewDisplay.HideSelection = false;
             this.listViewDisplay.Location = new System.Drawing.Point(320, 40);
             this.listViewDisplay.Name = "listViewDisplay";
             this.listViewDisplay.Size = new System.Drawing.Size(135, 223);
             this.listViewDisplay.TabIndex = 9;
             this.listViewDisplay.UseCompatibleStateImageBehavior = false;
+            this.listViewDisplay.View = System.Windows.Forms.View.Details;
+            // 
+            // nameColumn
+            // 
+            this.nameColumn.Text = "Name";
+            this.nameColumn.Width = 65;
+            // 
+            // catColumn
+            // 
+            this.catColumn.Text = "Category";
+            this.catColumn.Width = 67;
             // 
             // addButton
             // 
@@ -183,15 +203,17 @@
             this.saveButton.TabIndex = 15;
             this.saveButton.Text = "Save";
             this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
-            // button6
+            // loadButton
             // 
-            this.button6.Location = new System.Drawing.Point(247, 45);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(65, 23);
-            this.button6.TabIndex = 16;
-            this.button6.Text = "Load";
-            this.button6.UseVisualStyleBackColor = true;
+            this.loadButton.Location = new System.Drawing.Point(247, 45);
+            this.loadButton.Name = "loadButton";
+            this.loadButton.Size = new System.Drawing.Size(65, 23);
+            this.loadButton.TabIndex = 16;
+            this.loadButton.Text = "Load";
+            this.loadButton.UseVisualStyleBackColor = true;
+            this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
             // 
             // clearButton
             // 
@@ -212,13 +234,29 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Structure Type";
             // 
+            // wikiStrip
+            // 
+            this.wikiStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stripLabel});
+            this.wikiStrip.Location = new System.Drawing.Point(0, 266);
+            this.wikiStrip.Name = "wikiStrip";
+            this.wikiStrip.Size = new System.Drawing.Size(469, 22);
+            this.wikiStrip.TabIndex = 19;
+            this.wikiStrip.Text = "statusStrip1";
+            // 
+            // stripLabel
+            // 
+            this.stripLabel.Name = "stripLabel";
+            this.stripLabel.Size = new System.Drawing.Size(0, 17);
+            // 
             // WikiForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(469, 270);
+            this.ClientSize = new System.Drawing.Size(469, 288);
+            this.Controls.Add(this.wikiStrip);
             this.Controls.Add(this.clearButton);
-            this.Controls.Add(this.button6);
+            this.Controls.Add(this.loadButton);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.searchBox);
             this.Controls.Add(this.searchButton);
@@ -230,14 +268,16 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.descBox);
-            this.Controls.Add(this.nonLinRadioButton);
-            this.Controls.Add(this.linRadioButton);
+            this.Controls.Add(this.nonLinRB);
+            this.Controls.Add(this.linRB);
             this.Controls.Add(this.nameBox);
             this.Controls.Add(this.catBox);
             this.Controls.Add(this.groupBox1);
             this.Name = "WikiForm";
             this.Text = "My Data Structure Wiki";
             this.Load += new System.EventHandler(this.WikiForm_Load);
+            this.wikiStrip.ResumeLayout(false);
+            this.wikiStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -247,8 +287,8 @@
 
         private System.Windows.Forms.ComboBox catBox;
         private System.Windows.Forms.TextBox nameBox;
-        private System.Windows.Forms.RadioButton linRadioButton;
-        private System.Windows.Forms.RadioButton nonLinRadioButton;
+        private System.Windows.Forms.RadioButton linRB;
+        private System.Windows.Forms.RadioButton nonLinRB;
         private System.Windows.Forms.TextBox descBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
@@ -260,9 +300,13 @@
         private System.Windows.Forms.Button searchButton;
         private System.Windows.Forms.TextBox searchBox;
         private System.Windows.Forms.Button saveButton;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button loadButton;
         private System.Windows.Forms.Button clearButton;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.StatusStrip wikiStrip;
+        private System.Windows.Forms.ToolStripStatusLabel stripLabel;
+        private System.Windows.Forms.ColumnHeader nameColumn;
+        private System.Windows.Forms.ColumnHeader catColumn;
     }
 }
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataStructureWikiAppV2
 {
+    [Serializable]
     internal class Information : IComparable<Information>
     {
         private string name;
@@ -13,12 +14,17 @@ namespace DataStructureWikiAppV2
         private string structure;
         private string description;
 
+        public Information()
+        {
+
+        }
+
         public Information(string name, string category, string structure, string description)
         {
-            this.name = name;
-            this.category = category;  
-            this.structure = structure;
-            this.description = description;
+            setName(name);
+            setCategory(category);  
+            setStructure(structure);
+            setDescription(description);
         }
 
         override public string ToString()
@@ -26,7 +32,55 @@ namespace DataStructureWikiAppV2
             return name + " " + category + " " + structure + " " + description;
         }
 
-        private int CompareTo()
+        public string DisplayInformation()
+        {
+            return name + " " + category;
+        }
+
+        public int CompareTo(Information newInfoName)
+        {
+            return name.CompareTo(newInfoName.name);
+        }
+
+        public string getName()
+        {
+            return name;
+        }
+
+        public void setName(string newName)
+        {
+            name = newName;
+        }
+
+        public string getCategory()
+        {
+            return category;
+        }
+
+        public void setCategory(string newCategory)
+        {
+            category = newCategory;
+        }
+
+        public string getStructure()
+        {
+            return structure;
+        }
+
+        public void setStructure(string newStructure)
+        {
+            structure = newStructure;
+        }
+
+        public string getDescription()
+        {
+            return description;
+        }
+
+        public void setDescription(string newDescription)
+        {
+            description = newDescription;
+        }
     }
 }
 
