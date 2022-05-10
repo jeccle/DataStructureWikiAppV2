@@ -138,6 +138,8 @@
             this.listViewDisplay.TabIndex = 9;
             this.listViewDisplay.UseCompatibleStateImageBehavior = false;
             this.listViewDisplay.View = System.Windows.Forms.View.Details;
+            this.listViewDisplay.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listViewDisplay_MouseClick);
+            this.listViewDisplay.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listViewDisplay_MouseDoubleClick);
             // 
             // nameColumn
             // 

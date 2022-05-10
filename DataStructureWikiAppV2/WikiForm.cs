@@ -20,6 +20,7 @@ namespace DataStructureWikiAppV2
         }
         private List<Information> wiki = new List<Information>();
         private string fileName = "information.dat";
+        private int ptr = 0;
 
         #region Util
         private void PopulateComboBox()
@@ -34,28 +35,33 @@ namespace DataStructureWikiAppV2
         private string CheckRadioBoxValue()
         {
             if (linRB.Checked)
-            {
                 return "Linear";
-            }
             else if (nonLinRB.Checked)
-            {
-                
                 return "Non-Linear";
-            }
             else
-            {
                 return "null";
-            }
+        }
+
+        private void SetRadioBoxValue()
+        {
+
+        }
+
+        private int RadioBoxIndex()
+        {
+            if (linRB.Checked)
+                return 1;
+            else if (nonLinRB.Checked)
+                return 0;
+            else
+                return -1;
         }
 
         // Will return bool checking if all text boxes are appropriately filled.
         private bool CheckTextBoxes()
         {
-            if (!(CheckRadioBoxValue() == "null") && !string.IsNullOrEmpty(nameBox.Text) && !string.IsNullOrEmpty(catBox.Text)
-                && !string.IsNullOrEmpty(descBox.Text))
-            {
+            if (!(RadioBoxIndex() == -1) && !string.IsNullOrEmpty(nameBox.Text) && !string.IsNullOrEmpty(catBox.Text) && !string.IsNullOrEmpty(descBox.Text))
                 return true;
-            }
             else
             {
                 ClearColors();
@@ -86,14 +92,24 @@ namespace DataStructureWikiAppV2
             }
         }
 
+        private bool ValidName(string name)
+        {
+            if (wiki.Exists(info => info.getName().ToLower() == name.ToLower()))
+                return false;
+            else
+                return true;
+        }
+
         private void DisplayListView()
         {
+            ptr = 0;
             listViewDisplay.Items.Clear();
-            for (int i = 0; i < wiki.Count; i++)
+            foreach (var structure in wiki)
             {
-                ListViewItem structureDisplay = new ListViewItem(wiki[i].getName());
-                structureDisplay.SubItems.Add(wiki[i].getCategory());
+                ListViewItem structureDisplay = new ListViewItem(structure.getName());
+                structureDisplay.SubItems.Add(structure.getCategory());
                 listViewDisplay.Items.Add(structureDisplay);
+                ptr++;
             }
         }
 
@@ -115,6 +131,40 @@ namespace DataStructureWikiAppV2
             descBox.Clear();
             stripLabel.Text = "";
         }
+
+        private void PopBoxes(int index)
+        {
+            nameBox.Text = wiki[index].getName();
+            catBox.Text = wiki[index].getCategory();
+            // Change to reaadio box structureBox.Text = wiki[index].getStructure();
+            if (wiki[index].getStructure().ToLower() == "linear")
+            {
+                linRB.Checked = true;
+                nonLinRB.Checked = true;
+            }
+            else if (wiki[index].getStructure().ToLower() == "non-linear")
+            {
+                nonLinRB.Checked = true;
+                linRB.Checked = false;
+            }
+
+            descBox.Text = wiki[index].getDescription();
+        }
+
+        private void RemoveStructure(List<Information> list, int index)
+        {
+            try
+            {
+                list.RemoveAt(index);
+                DisplayListView();
+                stripLabel.Text = "Removing at index " + index;
+            }
+            catch
+            {
+                // Error msgs
+            }
+        }
+
         #endregion
 
         #region File I/O
@@ -122,11 +172,11 @@ namespace DataStructureWikiAppV2
         {
             try
             {
-                using (BinaryReader bin = new BinaryReader(new FileStream(selectedFile, FileMode.Open)))
+                wiki.Clear();
+                using (var bin = new BinaryReader(File.Open(selectedFile, FileMode.OpenOrCreate), Encoding.UTF8, false))
                 {
-                    string[] words = new string[4];
                     // May be incorrect.
-                    while (!bin.BaseStream.CanRead)
+                    while (bin.BaseStream.CanRead)
                     {
                         Information line = new Information();
                         line.setName(bin.ReadString());
@@ -147,9 +197,9 @@ namespace DataStructureWikiAppV2
         {
             try
             {
-                using (BinaryWriter bin = new BinaryWriter(new FileStream(selectedFile, FileMode.OpenOrCreate)))
+                using (BinaryWriter bin = new BinaryWriter(File.Open(selectedFile, FileMode.OpenOrCreate), Encoding.UTF8, false))
                 {
-                    foreach (Information structure in wiki)
+                    foreach (var structure in wiki)
                     {
                         bin.Write(structure.getName());
                         bin.Write(structure.getCategory());
@@ -168,7 +218,7 @@ namespace DataStructureWikiAppV2
         #region Buttons
         private void addButton_Click(object sender, EventArgs e)
         {
-            if (CheckTextBoxes())
+            if (CheckTextBoxes() && ValidName(nameBox.Text))
             {
                 Information information = new Information();
                 information.setStructure(CheckRadioBoxValue());
@@ -189,12 +239,16 @@ namespace DataStructureWikiAppV2
 
         private void editButton_Click(object sender, EventArgs e)
         {
-
+            //int selectedIndex = listViewDisplay.SelectedIndices.;
         }
 
         private void delButton_Click(object sender, EventArgs e)
         {
-
+            if (CheckTextBoxes())
+            {
+                int currentItem = listViewDisplay.SelectedIndices[0];
+                RemoveStructure(wiki, currentItem);
+            }
         }
 
         private void clearButton_Click(object sender, EventArgs e)
@@ -207,6 +261,7 @@ namespace DataStructureWikiAppV2
         private void loadButton_Click(object sender, EventArgs e)
         {
             LoadFromFile(fileName);
+            DisplayListView();
             stripLabel.Text = "Loading from file...";
         }
 
@@ -226,5 +281,29 @@ namespace DataStructureWikiAppV2
 
         #endregion
 
+        private void listViewDisplay_MouseClick(object sender, MouseEventArgs e)
+        {
+            int currentItem = listViewDisplay.SelectedIndices[0];
+            PopBoxes(currentItem);
+
+        }
+
+        private void listViewDisplay_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                int currentItem = listViewDisplay.SelectedIndices[0];
+                DialogResult sr = MessageBox.Show("Delete " + wiki[currentItem].getName() + "?", "Data Structure Wiki App", MessageBoxButtons.OKCancel);
+                if (sr == DialogResult.OK)
+                {
+
+                    RemoveStructure(wiki, currentItem);
+                }
+            }
+            catch
+            {
+                stripLabel.Text = "Error attempting to delete record using double click.";
+            }
+        }
     }
 }
