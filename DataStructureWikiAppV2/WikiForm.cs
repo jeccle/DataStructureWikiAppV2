@@ -21,6 +21,7 @@ namespace DataStructureWikiAppV2
         private List<Information> wiki = new List<Information>();
         private string fileName = "information.dat";
         private int ptr = 0;
+        private int currentItem;
 
         #region Util
         private void PopulateComboBox()
@@ -127,9 +128,12 @@ namespace DataStructureWikiAppV2
             nameBox.Clear();
             catBox.Text = "";
             linRB.ForeColor = Color.Black;
+            linRB.Checked = false;
             nonLinRB.ForeColor = Color.Black;
+            nonLinRB.Checked = false;
             descBox.Clear();
             stripLabel.Text = "";
+            currentItem = -1;
         }
 
         private void PopBoxes(int index)
@@ -158,6 +162,32 @@ namespace DataStructureWikiAppV2
                 list.RemoveAt(index);
                 DisplayListView();
                 stripLabel.Text = "Removing at index " + index;
+            }
+            catch
+            {
+                // Error msgs
+            }
+        }
+
+        private void AddStructure(List<Information> list, string name, string cat, string structure, string desc)
+        {
+            Information information = new Information();
+            information.setStructure(structure);
+            information.setName(name);
+            information.setCategory(cat);
+            information.setDescription(desc);
+            list.Add(information);
+        }
+
+        private void EditStructure(List<Information> list, int index, string name, string cat, string structure, string desc)
+        {
+            try
+            {
+                list.ElementAt(index).setName(name);
+                list.ElementAt(index).setCategory(cat);
+                list.ElementAt(index).setStructure(structure);
+                list.ElementAt(index).setDescription(desc);
+                stripLabel.Text = "Edited record...";
             }
             catch
             {
@@ -220,15 +250,11 @@ namespace DataStructureWikiAppV2
         {
             if (CheckTextBoxes() && ValidName(nameBox.Text))
             {
-                Information information = new Information();
-                information.setStructure(CheckRadioBoxValue());
-                information.setName(nameBox.Text);
-                information.setCategory(catBox.SelectedItem.ToString());
-                information.setDescription(descBox.Text);
-                wiki.Add(information);
+                AddStructure(wiki, nameBox.Text, catBox.SelectedItem.ToString(), CheckRadioBoxValue(), descBox.Text);
                 DisplayListView();
                 ClearColors();
                 ClearBoxes();
+                nameBox.Focus();
             }
             else
             {
@@ -239,15 +265,29 @@ namespace DataStructureWikiAppV2
 
         private void editButton_Click(object sender, EventArgs e)
         {
-            //int selectedIndex = listViewDisplay.SelectedIndices.;
+            if (CheckTextBoxes() && currentItem != -1)
+            {
+
+                EditStructure(wiki, currentItem, nameBox.Text, catBox.SelectedItem.ToString(), CheckRadioBoxValue(), descBox.Text);
+            }
         }
 
         private void delButton_Click(object sender, EventArgs e)
         {
             if (CheckTextBoxes())
             {
-                int currentItem = listViewDisplay.SelectedIndices[0];
-                RemoveStructure(wiki, currentItem);
+                DialogResult sr = MessageBox.Show("Delete " + wiki[currentItem].getName() + "?", "Data Structure Wiki App", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                if (sr == DialogResult.OK)
+                {
+                    RemoveStructure(wiki, currentItem);
+                    ClearBoxes();
+                    ClearColors();
+                    stripLabel.Text = "Structure removed...";
+                }
+            }
+            else
+            {
+                stripLabel.Text = "Please select a structure for deletion";
             }
         }
 
@@ -278,14 +318,12 @@ namespace DataStructureWikiAppV2
             PopulateComboBox();
         }
 
-
         #endregion
 
         private void listViewDisplay_MouseClick(object sender, MouseEventArgs e)
         {
-            int currentItem = listViewDisplay.SelectedIndices[0];
+            currentItem = listViewDisplay.SelectedIndices[0];
             PopBoxes(currentItem);
-
         }
 
         private void listViewDisplay_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -296,7 +334,6 @@ namespace DataStructureWikiAppV2
                 DialogResult sr = MessageBox.Show("Delete " + wiki[currentItem].getName() + "?", "Data Structure Wiki App", MessageBoxButtons.OKCancel);
                 if (sr == DialogResult.OK)
                 {
-
                     RemoveStructure(wiki, currentItem);
                 }
             }
