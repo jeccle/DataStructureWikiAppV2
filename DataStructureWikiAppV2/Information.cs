@@ -36,10 +36,11 @@ namespace DataStructureWikiAppV2
         {
             return name + " " + category;
         }
-
+        
+        
         public int CompareTo(Information newInfoName)
         {
-            return name.CompareTo(newInfoName.name);
+            return name.CompareTo(newInfoName.name.ToLower());
         }
 
         public string getName()
