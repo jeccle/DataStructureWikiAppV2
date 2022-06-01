@@ -146,7 +146,6 @@ namespace DataStructureWikiAppV2
         // [PC:9] Create a custom method that will sort and display the name and category of the list.
         private void DisplayListView()
         {
-            ptr = 0;
             listViewDisplay.Items.Clear();
             wiki.Sort();
             Trace.TraceInformation("Displaying elements of list.");
@@ -156,7 +155,6 @@ namespace DataStructureWikiAppV2
                 structureDisplay.SubItems.Add(structure.getCategory());
                 listViewDisplay.Items.Add(structureDisplay);
                 Trace.WriteLine(structure.getName());
-                ptr++;
             }
             Trace.TraceInformation("Finished displaying all elements.");
         }
