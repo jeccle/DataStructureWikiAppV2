@@ -40,7 +40,7 @@ namespace DataStructureWikiAppV2
         
         public int CompareTo(Information newInfoName)
         {
-            return name.CompareTo(newInfoName.name.ToLower());
+            return name.ToLower().CompareTo(newInfoName.name.ToLower());
         }
 
         public string getName()
