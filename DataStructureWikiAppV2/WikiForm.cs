@@ -19,7 +19,7 @@ namespace DataStructureWikiAppV2
         {
             InitializeComponent();
         }
-        // [PC]#2 Create a global List<T> of type information called wiki.
+        // [PC:2] Create a global List<T> of type information called wiki.
         private List<Information> wiki = new List<Information>();
         private string fileName = "information.dat";
         private int ptr = 0;
@@ -28,7 +28,7 @@ namespace DataStructureWikiAppV2
         // Trace.Listeners.Add(new TextWriterTraceListener(Console.out));  
         
         #region Util
-        // [PC]#4 Data structure matrix contains six categories.
+        // [PC:4] Data structure matrix contains six categories.
         private void PopulateComboBox()
         {
             string[] categories = new string[6] { "Array", "List", "Tree", "Graph", "Abstract", "Hash" };
@@ -40,7 +40,7 @@ namespace DataStructureWikiAppV2
             }
         }
 
-        // [PC]#6 Create two methods to highlight and return values from radio.
+        // [PC:6] Create two methods to highlight and return values from radio.
         // First returns string.
         private string CheckRadioBoxValue()
         {
@@ -67,25 +67,27 @@ namespace DataStructureWikiAppV2
         private bool CheckTextBoxes()
         {
             // Checks all text boxes and measures if contents are empty or not.
-            if (!(RadioBoxIndex() == -1) && !string.IsNullOrEmpty(nameBox.Text) && !string.IsNullOrEmpty(catBox.Text)
-                && !string.IsNullOrEmpty(descBox.Text))
+            if (!(RadioBoxIndex() == -1) && !string.IsNullOrEmpty(nameBox.Text) && !string.IsNullOrEmpty(catBox.Text) && !string.IsNullOrEmpty(descBox.Text))
                 return true;
             else
             {
                 ClearColors();
                 // Check each text box, identify field needed to be filled with a red visual marker.
+                // Check if nameBox is empty.
                 if (string.IsNullOrEmpty(nameBox.Text))
                 {
                     Trace.TraceInformation("NameBox identified as empty.");
                     nameBox.BackColor = Color.LightPink;
                     stripLabel.Text = "Please specify Name.";
                 }
+                // Check if category box is empty.
                 if (string.IsNullOrEmpty(catBox.Text))
                 {
                     Trace.TraceInformation("catBox identified as empty.");
                     catBox.BackColor = Color.LightPink;
                     stripLabel.Text = "Please specify Category";
                 }
+                // Check if structure radio box is ticked.
                 if (CheckRadioBoxValue() == "")
                 {
                     Trace.TraceInformation("radioBox identified as empty.");
@@ -93,6 +95,7 @@ namespace DataStructureWikiAppV2
                     nonLinRB.ForeColor = Color.Red;
                     stripLabel.Text = "Please specify Linear/Non-Linear.";
                 }
+                // Check if description is empty.
                 if (string.IsNullOrEmpty(descBox.Text))
                 {
                     Trace.TraceInformation("descBox identified as empty.");
@@ -105,7 +108,7 @@ namespace DataStructureWikiAppV2
             }
         }
 
-        // [PC]#5 ValidName method takes string input and returns bool after checking for duplicates.
+        // [PC:5] ValidName method takes string input and returns bool after checking for duplicates.
         private bool ValidName(string name)
         {
             // Add other text box checks here potentially.
@@ -124,7 +127,7 @@ namespace DataStructureWikiAppV2
             }
         }
 
-        // [PC]#9 Create a custom method that will sort and display the name and category of the list.
+        // [PC:9] Create a custom method that will sort and display the name and category of the list.
         private void DisplayListView()
         {
             ptr = 0;
@@ -167,7 +170,7 @@ namespace DataStructureWikiAppV2
             Trace.TraceInformation("Clearing text boxes.");
         }
 
-        // [PC]#11 Populates text boxes with specified item information.
+        // [PC:11] Populates text boxes with specified item information.
         private void PopBoxes(int index)
         {
             nameBox.Text = wiki[index].getName();
@@ -186,7 +189,7 @@ namespace DataStructureWikiAppV2
             descBox.Text = wiki[index].getDescription();
         }
 
-        // [PC]#7 Delete currently selected item in listview.
+        // [PC:7] Delete currently selected item in listview.
         private void RemoveStructure(List<Information> list, int index)
         {
             try
@@ -195,7 +198,6 @@ namespace DataStructureWikiAppV2
                 stripLabel.Text = "Removing at index " + list.ElementAt(index);
                 list.RemoveAt(index);
                 DisplayListView();
-                
             }
             catch
             {
@@ -204,7 +206,7 @@ namespace DataStructureWikiAppV2
             }
         }
 
-        // [PC]#3 Add new item to list.
+        // [PC:3] Add new item to list.
         private void AddStructure(List<Information> list, string name, string cat, string structure, string desc)
         {
             Information information = new Information();
@@ -216,7 +218,7 @@ namespace DataStructureWikiAppV2
             Trace.TraceInformation("Adding item: " + information.DisplayInformation());
         }
 
-        // [PC]#8 Edit currently selected item from list.
+        // [PC:8] Edit currently selected item from list.
         private void EditStructure(List<Information> list, int index, string name, string cat, string structure, string desc)
         {
             try
@@ -353,7 +355,7 @@ namespace DataStructureWikiAppV2
             }
         }
 
-        // [PC]#7 Remove items from listView giving user the option to back out of the action using dialogbox.
+        // [PC:7] Remove items from listView giving user the option to back out of the action using dialogbox.
         private void delButton_Click(object sender, EventArgs e)
         {
             if (CheckTextBoxes())
@@ -375,7 +377,7 @@ namespace DataStructureWikiAppV2
             }
         }
 
-        // [PC]#12 Create a method that will clear and reset text boxes, comboBox, etc
+        // [PC:12] Create a method that will clear and reset text boxes, comboBox, etc
         private void clearButton_Click(object sender, EventArgs e)
         {
             ClearColors();
@@ -385,7 +387,7 @@ namespace DataStructureWikiAppV2
             stripLabel.Text = "Clearing wiki...";
         }
 
-        // [PC]#14 Create two buttons for the manual open function.
+        // [PC:14] Create two buttons for the manual open function.
         // Files are stored in binary format.
         private void loadButton_Click(object sender, EventArgs e)
         {
@@ -397,7 +399,7 @@ namespace DataStructureWikiAppV2
             //stripLabel.Text = "Loading from file...";
         }
 
-        // [PC]#14 Create two buttons for the manual save function.
+        // [PC:14] Create two buttons for the manual save function.
         private void saveButton_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveDialog = new SaveFileDialog();
@@ -407,7 +409,7 @@ namespace DataStructureWikiAppV2
             //stripLabel.Text = "Writing to file...";
         }
 
-        // [PC]#10 Uses binary search to find data structure name. If found boxes are populated
+        // [PC:10] Uses binary search to find data structure name. If found boxes are populated
         private void searchButton_Click(object sender, EventArgs e)
         {
             try
@@ -425,6 +427,7 @@ namespace DataStructureWikiAppV2
                         PopBoxes(foundIndex);
                         stripLabel.Text = wiki[foundIndex].getName() + " found.";
                         Trace.TraceInformation("Item: " + wiki[foundIndex].getName() + " found at: " + foundIndex);
+                        listViewDisplay.Focus();
                         listViewDisplay.Items[foundIndex].Selected = true;
                         searchBox.Clear();
                         searchBox.Focus();
@@ -452,10 +455,13 @@ namespace DataStructureWikiAppV2
         #region Form Events
         private void WikiForm_Load(object sender, EventArgs e)
         {
+            // Outputs Trace Information to log file which is recorded in the file dir.
+            // Use Trace.Flush() or Trace.Close() to empty the output buffer.
+            Trace.Listeners.Add(new TextWriterTraceListener("TraceOutput.log", "myListener"));
             PopulateComboBox();
         }
 
-        //[PC]#11 user can select a Data Structure Name from the list of Names and information will be displayed in text boxes.
+        //[PC:11] user can select a Data Structure Name from the list of Names and information will be displayed in text boxes.
         private void listViewDisplay_MouseClick(object sender, MouseEventArgs e)
         {
             currentItem = listViewDisplay.SelectedIndices[0];
@@ -463,7 +469,7 @@ namespace DataStructureWikiAppV2
             ClearColors();
         }
 
-        //[PC]#13 Create a double click event 
+        //[PC:13] Create a double click event 
         private void listViewDisplay_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             try
@@ -481,7 +487,7 @@ namespace DataStructureWikiAppV2
             }
         }
 
-        // [PC]#15 The wiki application will save data when form closes.
+        // [PC:15] The wiki application will save data when form closes.
         // if no is selected default filename is selected.
         private void WikiForm_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -496,18 +502,16 @@ namespace DataStructureWikiAppV2
                 }
                 else if (sr == DialogResult.No)
                     SaveToFile(fileName);
-                
-                    
             }
             catch(Exception ex)
             {
                 Trace.TraceError("Error: " + ex);
             }
-
+            Trace.Flush();
         }
 
 
-        //[PC]#13 Double click event on nameBox to clear all textBoxes.
+        //[PC:13] Double click event on nameBox to clear all textBoxes.
         private void nameBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             ClearBoxes();
@@ -516,6 +520,7 @@ namespace DataStructureWikiAppV2
 
 
         #endregion
-      
+
+
     }
 }

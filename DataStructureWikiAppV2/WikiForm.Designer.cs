@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.catBox = new System.Windows.Forms.ComboBox();
             this.nameBox = new System.Windows.Forms.TextBox();
             this.linRB = new System.Windows.Forms.RadioButton();
@@ -50,6 +51,7 @@
             this.structureBox = new System.Windows.Forms.GroupBox();
             this.wikiStrip = new System.Windows.Forms.StatusStrip();
             this.stripLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.wikiTT = new System.Windows.Forms.ToolTip(this.components);
             this.wikiStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,6 +62,7 @@
             this.catBox.Name = "catBox";
             this.catBox.Size = new System.Drawing.Size(121, 21);
             this.catBox.TabIndex = 0;
+            this.wikiTT.SetToolTip(this.catBox, "Select category of data structure.");
             // 
             // nameBox
             // 
@@ -67,6 +70,7 @@
             this.nameBox.Name = "nameBox";
             this.nameBox.Size = new System.Drawing.Size(100, 20);
             this.nameBox.TabIndex = 1;
+            this.wikiTT.SetToolTip(this.nameBox, "Double-click to clear all text boxes.");
             this.nameBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.nameBox_MouseDoubleClick);
             // 
             // linRB
@@ -98,6 +102,7 @@
             this.descBox.Name = "descBox";
             this.descBox.Size = new System.Drawing.Size(301, 124);
             this.descBox.TabIndex = 4;
+            this.wikiTT.SetToolTip(this.descBox, "Description of data structure.");
             // 
             // label1
             // 
@@ -107,6 +112,7 @@
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 5;
             this.label1.Text = "Name";
+            this.wikiTT.SetToolTip(this.label1, "Double-Click name text box to clear text boxes.");
             // 
             // label2
             // 
@@ -134,9 +140,11 @@
             this.listViewDisplay.FullRowSelect = true;
             this.listViewDisplay.HideSelection = false;
             this.listViewDisplay.Location = new System.Drawing.Point(320, 40);
+            this.listViewDisplay.MultiSelect = false;
             this.listViewDisplay.Name = "listViewDisplay";
             this.listViewDisplay.Size = new System.Drawing.Size(135, 223);
             this.listViewDisplay.TabIndex = 9;
+            this.wikiTT.SetToolTip(this.listViewDisplay, "Data structures.");
             this.listViewDisplay.UseCompatibleStateImageBehavior = false;
             this.listViewDisplay.View = System.Windows.Forms.View.Details;
             this.listViewDisplay.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listViewDisplay_MouseClick);
@@ -159,6 +167,7 @@
             this.addButton.Size = new System.Drawing.Size(70, 23);
             this.addButton.TabIndex = 10;
             this.addButton.Text = "Add";
+            this.wikiTT.SetToolTip(this.addButton, "Fill all fields and click to add new record.");
             this.addButton.UseVisualStyleBackColor = true;
             this.addButton.Click += new System.EventHandler(this.addButton_Click);
             // 
@@ -169,6 +178,7 @@
             this.editButton.Size = new System.Drawing.Size(70, 23);
             this.editButton.TabIndex = 11;
             this.editButton.Text = "Edit";
+            this.wikiTT.SetToolTip(this.editButton, "Select record to edit from list, change values.");
             this.editButton.UseVisualStyleBackColor = true;
             this.editButton.Click += new System.EventHandler(this.editButton_Click);
             // 
@@ -179,6 +189,7 @@
             this.delButton.Size = new System.Drawing.Size(70, 23);
             this.delButton.TabIndex = 12;
             this.delButton.Text = "Delete";
+            this.wikiTT.SetToolTip(this.delButton, "Select record to delete from list.");
             this.delButton.UseVisualStyleBackColor = true;
             this.delButton.Click += new System.EventHandler(this.delButton_Click);
             // 
@@ -189,6 +200,7 @@
             this.searchButton.Size = new System.Drawing.Size(65, 23);
             this.searchButton.TabIndex = 13;
             this.searchButton.Text = "Search";
+            this.wikiTT.SetToolTip(this.searchButton, "Insert existing record in text box and click search to highlight list item.");
             this.searchButton.UseVisualStyleBackColor = true;
             this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
@@ -198,6 +210,7 @@
             this.searchBox.Name = "searchBox";
             this.searchBox.Size = new System.Drawing.Size(66, 20);
             this.searchBox.TabIndex = 14;
+            this.wikiTT.SetToolTip(this.searchBox, "Insert existing record here and click search to highlight list item.");
             // 
             // saveButton
             // 
@@ -206,6 +219,7 @@
             this.saveButton.Size = new System.Drawing.Size(65, 23);
             this.saveButton.TabIndex = 15;
             this.saveButton.Text = "Save";
+            this.wikiTT.SetToolTip(this.saveButton, "Save from selected file.");
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
@@ -216,6 +230,7 @@
             this.loadButton.Size = new System.Drawing.Size(65, 23);
             this.loadButton.TabIndex = 16;
             this.loadButton.Text = "Load";
+            this.wikiTT.SetToolTip(this.loadButton, "Load from selected file.");
             this.loadButton.UseVisualStyleBackColor = true;
             this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
             // 
@@ -226,6 +241,7 @@
             this.clearButton.Size = new System.Drawing.Size(70, 23);
             this.clearButton.TabIndex = 17;
             this.clearButton.Text = "Clear";
+            this.wikiTT.SetToolTip(this.clearButton, "Clears all elements of application.");
             this.clearButton.UseVisualStyleBackColor = true;
             this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
             // 
@@ -237,6 +253,7 @@
             this.structureBox.TabIndex = 18;
             this.structureBox.TabStop = false;
             this.structureBox.Text = "Structure Type";
+            this.wikiTT.SetToolTip(this.structureBox, "Select structure type.");
             // 
             // wikiStrip
             // 
@@ -312,6 +329,7 @@
         private System.Windows.Forms.ToolStripStatusLabel stripLabel;
         private System.Windows.Forms.ColumnHeader nameColumn;
         private System.Windows.Forms.ColumnHeader catColumn;
+        private System.Windows.Forms.ToolTip wikiTT;
     }
 }
 
