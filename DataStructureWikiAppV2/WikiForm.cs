@@ -22,14 +22,11 @@ namespace DataStructureWikiAppV2
         // [PC:2] Create a global List<T> of type information called wiki.
         private List<Information> wiki = new List<Information>();
         private string fileName = "information.dat";
-        private int ptr = 0;
         private int currentItem;
-
-        // Trace.Listeners.Add(new TextWriterTraceListener(Console.out));  
-        
+  
         #region Util
-        // [PC:4] Data structure matrix contains six categories.
-        private void PopulateComboBox()
+        
+        private void PoppulateComboBox()
         {
             string[] categories = new string[6] { "Array", "List", "Tree", "Graph", "Abstract", "Hash" };
             Trace.TraceInformation("Populating combo box.");
@@ -37,6 +34,25 @@ namespace DataStructureWikiAppV2
             {
                 Trace.WriteLine("Inserting: " + category);
                 catBox.Items.Add(category);
+            }
+        }
+        // [PC:4] Data structure matrix contains six categories.
+        // Loads categories from file instead of hardcoded.
+        private void PopulateComboBox(string selectedFile)
+        {
+            try
+            {
+                wiki.Clear();
+                string[] lines = File.ReadAllLines("categories.txt");
+                foreach(string category in lines)
+                {
+                    Trace.WriteLine("Inserting: " + category);
+                    catBox.Items.Add(category);
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceInformation(" " + ex);
             }
         }
 
@@ -458,7 +474,7 @@ namespace DataStructureWikiAppV2
             // Outputs Trace Information to log file which is recorded in the file dir.
             // Use Trace.Flush() or Trace.Close() to empty the output buffer.
             Trace.Listeners.Add(new TextWriterTraceListener("TraceOutput.log", "myListener"));
-            PopulateComboBox();
+            PopulateComboBox("categories.txt");
         }
 
         //[PC:11] user can select a Data Structure Name from the list of Names and information will be displayed in text boxes.
