@@ -67,6 +67,7 @@
             this.nameBox.Name = "nameBox";
             this.nameBox.Size = new System.Drawing.Size(100, 20);
             this.nameBox.TabIndex = 1;
+            this.nameBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.nameBox_MouseDoubleClick);
             // 
             // linRB
             // 
@@ -278,6 +279,7 @@
             this.Controls.Add(this.structureBox);
             this.Name = "WikiForm";
             this.Text = "My Data Structure Wiki";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.WikiForm_FormClosed);
             this.Load += new System.EventHandler(this.WikiForm_Load);
             this.wikiStrip.ResumeLayout(false);
             this.wikiStrip.PerformLayout();

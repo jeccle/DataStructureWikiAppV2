@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataStructureWikiAppV2
 {
+    // [PC]#1 Create separate class file containing specified four fields.
     [Serializable]
     internal class Information : IComparable<Information>
     {
